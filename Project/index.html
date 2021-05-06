@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8" />
+  <title></title>
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="css/mdb.min.css" />
+
+  <!-- JS Scripts -->
+  <script src="/libs/d3.min.js"></script>
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+  <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+  <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+  <script type="text/javascript" src="js/mdb.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<header>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarExample01"
+        aria-controls="navbarExample01" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarExample01">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item active">
+            <a class="nav-link" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Placeholder</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- Navbar -->
+
+  <!-- Background image -->
+  <div class="p-5 text-center bg-image" style="
+      background-image: url('https://mdbcdn.b-cdn.net/img/new/slides/041.jpg');
+      height: 400px;
+    ">
+    <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
+      <div class="d-flex justify-content-center align-items-center h-100">
+        <div class="text-white">
+          <h1 class="mb-3">Being active is</h1>
+          <h4 class="mb-3">Fun & Healthy</h4>
+          <a class="btn btn-outline-light btn-lg" href="#!" role="button">Start tracking your progress</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Background image -->
+</header>
+
+<body style="min-width: 1000px; background-color: #fafafa">
+
+  <div class="container">
+    <h1 class="display-4 text-center" style="margin-top:30px">Overview</h1>
+    <hr>
+
+    <div class="container" style="margin-top:30px">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Activity Time</h5>
+          <p class="card-text">
+          <div id="calendar_activity_heatmap"></div>
+          </p>
+        </div>
+        <div class="card-footer text-muted">Click on a specific tile to view details for that day</div>
+      </div>
+    </div>
+
+    <div class="container" style="margin-top:30px">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Locations</h5>
+          <p class="card-text geo_dataviz_container">
+            <svg id="geo_dataviz" height="500"></svg>
+          </p>
+        </div>
+        <div class="card-footer text-muted">Summary of activities location</div>
+      </div>
+    </div>
+
+    <div class="container" style="margin-top:30px;">
+      <!-- Tabs navs -->
+      <ul class="nav nav-tabs nav-justified mb-3" id="ex1" role="tablist">
+        <li class="nav-item" role="presentation">
+          <a class="nav-link active" id="ex3-tab-1" data-mdb-toggle="tab" href="#ex3-tabs-1" role="tab"
+            aria-controls="ex3-tabs-1" aria-selected="true">By Duration</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="ex3-tab-2" data-mdb-toggle="tab" href="#ex3-tabs-2" role="tab"
+            aria-controls="ex3-tabs-2" aria-selected="false">By Calories</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="ex3-tab-3" data-mdb-toggle="tab" href="#ex3-tabs-3" role="tab"
+            aria-controls="ex3-tabs-3" aria-selected="false">By Distance</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="ex3-tab-3" data-mdb-toggle="tab" href="#ex3-tabs-4" role="tab"
+            aria-controls="ex3-tabs-3" aria-selected="false">By Relative Effort</a>
+        </li>
+      </ul>
+      <!-- Tabs navs -->
+
+      <!-- Tabs content -->
+      <div class="tab-content" id="ex2-content" style="margin-top:-15px">
+        <div class="tab-pane fade show active" id="ex3-tabs-1" role="tabpanel" aria-labelledby="ex3-tab-1">
+                <div class="card text-center">
+                <div class="card-body">
+                  <h5 class="card-title">Activity types by duration</h5>
+                  <p class="card-text">
+                  <div id="treeplot_activities_type_duration"></div>
+                  </p>
+                </div>
+                <div class="card-footer text-muted">TO DO 1</div>
+              </div>
+        </div>
+        <div class="tab-pane fade" id="ex3-tabs-2" role="tabpanel" aria-labelledby="ex3-tab-2">
+          <div class="card text-center">
+          <div class="card-body">
+            <h5 class="card-title">Activity types by calories</h5>
+            <p class="card-text">
+            <div id="treeplot_activities_type_calories"></div>
+            </p>
+          </div>
+          <div class="card-footer text-muted">TO DO 2</div>
+        </div>
+        </div>
+        <div class="tab-pane fade" id="ex3-tabs-3" role="tabpanel" aria-labelledby="ex3-tab-3">
+          <div class="card text-center">
+          <div class="card-body">
+            <h5 class="card-title">Activity types by distance</h5>
+            <p class="card-text">
+            <div id="treeplot_activities_type_distance"></div>
+            </p>
+          </div>
+          <div class="card-footer text-muted">TO DO 3</div>
+        </div>
+        </div>
+        <div class="tab-pane fade" id="ex3-tabs-4" role="tabpanel" aria-labelledby="ex3-tab-3">
+          <div class="card text-center">
+          <div class="card-body">
+            <h5 class="card-title">Activity types by relative effort</h5>
+            <p class="card-text">
+            <div id="treeplot_activities_type_effort"></div>
+            </p>
+          </div>
+          <div class="card-footer text-muted">TO DO 4</div>
+        </div>
+        </div>
+      </div>
+      <!-- Tabs content -->
+    </div>
+
+
+    <div class="container" style="margin-top:30px;">
+      <!-- Tabs navs -->
+      <ul class="nav nav-tabs nav-justified mb-3" id="ex1" role="tablist">
+        <li class="nav-item" role="presentation">
+          <a class="nav-link active" id="ex3-tab-1" data-mdb-toggle="tab" href="#sleep-1" role="tab"
+            aria-controls="ex3-tabs-1" aria-selected="true">Sleep duration</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="ex3-tab-2" data-mdb-toggle="tab" href="#sleep-2" role="tab"
+            aria-controls="ex3-tabs-2" aria-selected="false">Deep sleep</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="ex3-tab-2" data-mdb-toggle="tab" href="#sleep-3" role="tab"
+            aria-controls="ex3-tabs-2" aria-selected="false">Sleep cycles</a>
+        </li>
+      </ul>
+      <!-- Tabs navs -->
+
+      <!-- Tabs content -->
+      <div class="tab-content" id="ex2-content" style="margin-top:-15px">
+        <div class="tab-pane fade show active" id="sleep-1" role="tabpanel" aria-labelledby="ex3-tab-1">
+                <div class="card text-center">
+                <div class="card-body">
+                  <h5 class="card-title">Sleep duration</h5>
+                  <p class="card-text sleep_duration_container">
+                    <div id="sleep_duration_bar_plot"></div>
+                  </p>
+                </div>
+                <div class="card-footer text-muted">TO DO 1</div>
+              </div>
+        </div>
+        <div class="tab-pane fade" id="sleep-2" role="tabpanel" aria-labelledby="ex3-tab-2">
+          <div class="card text-center">
+          <div class="card-body">
+            <h5 class="card-title">Deep Sleep duration</h5>
+            <p class="card-text">
+              <div id="deep_sleep_duration_bar_plot"></div>
+            </p>
+          </div>
+          <div class="card-footer text-muted">TO DO 2</div>
+        </div>
+        </div>
+        <div class="tab-pane fade" id="sleep-3" role="tabpanel" aria-labelledby="ex3-tab-2">
+          <div class="card text-center">
+          <div class="card-body">
+            <h5 class="card-title">Sleep cycles</h5>
+            <p class="card-text">
+              <div id="sleep_cycles_bar_plot"></div>
+            </p>
+          </div>
+          <div class="card-footer text-muted">TO DO 2</div>
+        </div>
+        </div>
+      </div>
+      <!-- Tabs content -->
+    </div>
+
+    <div class="container" style="margin-top:30px">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Sleep vs DeepSleep</h5>
+          <p class="card-text sleep_vs_deepsleep_container">
+            <div id="sleep_vs_deepsleep_chart"></div>
+          </p>
+        </div>
+        <div class="card-footer text-muted">Difference in report between sleep and deep sleep</div>
+      </div>
+    </div>
+
+    <div class="container" style="margin-top:30px">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Sleep Duration Histogram</h5>
+          <p class="sleep_duration_histogram_container">
+            <div id="sleep_duration_histogram_chart"></div>
+          </p>
+        </div>
+        <div class="card-footer text-muted">...</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- <div id="line_plot"></div> -->
+</body>
+
+<!-- Custom Visualizations -->
+<script src="/js/sleepBarPlot.js"></script>
+<script src="/js/linePlot.js"></script>
+<script src="/js/calendarHeatMap.js"></script>
+<script src="/js/geoWorldPlot.js"></script>
+<script src="/js/treeplotActivitiesType.js"></script>
+<script src="/js/sleepStackedBarPlot.js"></script>
+<script src="/js/sleepHistogram.js"></script>
+
+<style type="text/css">
+  /* 13. Basic Styling with CSS */
+
+  /* Style the lines by removing the fill and applying a stroke */
+  .line {
+    fill: none;
+    stroke: #ffab00;
+    stroke-width: 3;
+  }
+
+  .overlay {
+    fill: none;
+    pointer-events: all;
+  }
+
+  /* Style the dots by assigning a fill and stroke */
+  .dot {
+    fill: #ffab00;
+    stroke: #fff;
+  }
+
+  .focus circle {
+    fill: none;
+    stroke: steelblue;
+  }
+
+  div.tooltip {
+    position: absolute;
+    text-align: center;
+    width: 80px;
+    height: 30px;
+    padding: 2px;
+    font: 12px sans-serif;
+    background: lightsteelblue;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+  }
+</style>
+
+</html>
