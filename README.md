@@ -27,9 +27,7 @@ With this visualization, we want to mainly target the sports audience which reco
 ### Exploratory Data Analysis and creating the website
 In order to be able to start visualise our data in the Javascipt library D3 we had to first preprocess our data with Python. This is why we provide a few jupyter notebooks. Their purpose are explain below:
 
-* strava_gpx_parser.ipynb :
-
-* insert_samsung_data.ipynb :
+* strava_gpx_parser.ipynb : script that parsed the gpx files and converts them into a csv/json map
 
 * preprocessing.ipynb : In this files we preprocess the data to create for each graph in the following list, a csv containing only the useful feature that we want to visualise.(The activity /no activity vs sleep analysis, Calories vs Sleep analysis , Moving Time vs Sleep analysis ,The stackedbar plot for Motivation analysis, The radar plot for Athletes Type and the Average speed graph.)
 
@@ -42,12 +40,10 @@ All of the output of "preprocessing.ipynb" are listed below. More detail are giv
 
 Moreover, we also have inputs from the other notebook:
 
-* stations.json : TO DO
-* tst.csv : TO DO
-* activities_with_gpx.csv : TO DO
-* activities_with_gpx_list.csv : TO DO
-* activities_with_gpx_list.json : TO DO
-* activities_with_gpx_list_small.json : TO DO
+* activities_with_gpx.csv : contains the strava exported list with all activities + 2 column, the middle latitude and longitude gps points
+* activities_with_gpx_list.csv : map with all gps points in the activities (written in csv format)
+* activities_with_gpx_list.json : map with all gps points in the activities (written in json format)
+* activities_with_gpx_list_small.json : compressed version of the above file
 
 In order to plot the gpx file on a real map we had to create two more html files.
 
@@ -58,18 +54,17 @@ In order to plot the gpx file on a real map we had to create two more html files
 In the folder Js , we provide all the code in Javascript in order to make the graph:
 * calendarHeatMap.js : plot the calendar graph
 * geoWorldPlot.js : plot the activity on the world map
-* mdb.min.js : TO DO
-* mdb.min.js.map : TO DO
+* mdb.min.js : this is the design frameworks we have used: https://mdbootstrap.com/
+* mdb.min.js.map : this is the design frameworks we have used: https://mdbootstrap.com/
 * overviewTableDataPlot.js: overview of the data in a table 
 * treeplotActivitiesType.js: Make a treeplot with a overview of different caracteristic for each type
 * average_speed_max.js : plot the average speed 
 * stackedbar_chart.js : Create the graph for the motivation analysis 
 * RadarChart.js : create a Radarchart which is used in the next file
-* script_spiderchart.js : use the RadarChart with our data to create the athletes type graph
-* linePlot.js : TO DO 
+* script_spiderchart.js : use the RadarChart with our data to create the athletes type graph 
 * sleepBarPlot.js : TO DO 
-* sleepHistogram.js: TO DO 
-* sleepStackedBarPlot.js: TO DO
+* sleepHistogram.js:  plot basic sleep histogram plot 
+* sleepStackedBarPlot.js: plot sleep vs deep sleep stacked bar plot
 * actinoactiv_plot.js : In this files, we create the hexbin graph to compare the sleep of the athletes if he has done a activity or he hasn't.
 * calories_plot.js : As before we observe the quality of the sleep vs calories
 * movingtime_plot.js : As before we observe the quality of the sleep vs moving time.
