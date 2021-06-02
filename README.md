@@ -62,7 +62,7 @@ In the folder Js , we provide all the code in Javascript in order to make the gr
 * stackedbar_chart.js : Create the graph for the motivation analysis 
 * RadarChart.js : create a Radarchart which is used in the next file
 * script_spiderchart.js : use the RadarChart with our data to create the athletes type graph 
-* sleepBarPlot.js : TO DO 
+* sleepBarPlot.js : plots the sleep bar plot
 * sleepHistogram.js:  plot basic sleep histogram plot 
 * sleepStackedBarPlot.js: plot sleep vs deep sleep stacked bar plot
 * actinoactiv_plot.js : In this files, we create the hexbin graph to compare the sleep of the athletes if he has done a activity or he hasn't.
