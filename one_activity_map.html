@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<style>
+  html,
+  body,
+  #map {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .stations,
+  .stations svg {
+    position: absolute;
+  }
+
+  .stations svg {
+    width: 60px;
+    height: 20px;
+    padding-right: 100px;
+    font: 10px sans-serif;
+  }
+
+  .stations circle {
+    fill: brown;
+  }
+</style>
+<div id="map"></div>
+<script src="//maps.google.com/maps/api/js?sensor=true"></script>
+<script src="//d3js.org/d3.v6.min.js"></script>
+<script>
+  function parse_query_string(query) {
+    var vars = query.split("&");
+    var query_string = {};
+    for (var i = 0; i < vars.length; i++) {
+      var pair = vars[i].split("=");
+      var key = decodeURIComponent(pair[0]);
+      var value = decodeURIComponent(pair[1]);
+      // If first entry with this name
+      if (typeof query_string[key] === "undefined") {
+        query_string[key] = decodeURIComponent(value);
+        // If second entry with this name
+      } else if (typeof query_string[key] === "string") {
+        var arr = [query_string[key], decodeURIComponent(value)];
+        query_string[key] = arr;
+        // If third or later entry with this name
+      } else {
+        query_string[key].push(decodeURIComponent(value));
+      }
+    }
+    return query_string;
+  }
+  var params = parse_query_string(window.location.search.substring(1));
+  var activity_id = params['activity_id']
+  console.log("params: ", params)
+
+  // Load the station data. When the data comes back, create an overlay.
+  d3.json("/EPFLDataViz/data/strava/activities_with_gpx_list.json").then((data) => {
+    var activity_ids = Object.values(data['Activity ID'])
+    var indx_chosen_activity = -1;
+    for(var indx = 0; indx < activity_ids.length; indx++) {
+      if(activity_ids[indx] == activity_id) {
+        indx_chosen_activity = indx;
+        break;
+      }
+    }
+
+    var coordinates = JSON.parse(Object.values(data["coordinates"])[indx_chosen_activity])
+    console.log("coordinates are: ", coordinates)
+
+    // Create the Google Map…
+    var map = new google.maps.Map(d3.select("#map").node(), {
+      zoom: 15,
+      center: new google.maps.LatLng(coordinates[0][0], coordinates[0][1]),
+      mapTypeId: google.maps.MapTypeId.TERRAIN,
+    });
+
+    var overlay = new google.maps.OverlayView();
+
+    // Add the container when the overlay is added to the map.
+    overlay.onAdd = function () {
+      var layer = d3
+        .select(this.getPanes().overlayLayer)
+        .append("div")
+        .attr("class", "stations");
+
+      // Draw each marker as a separate SVG element.
+      // We could use a single SVG, but what size would it have?
+      overlay.draw = function () {
+        var projection = this.getProjection(),
+          padding = 10;
+
+        var marker = layer
+          .selectAll("svg")
+          .data(Object.entries(coordinates))
+          .each(transform) // update existing markers
+          .enter()
+          .append("svg")
+          .each(transform)
+          .attr("class", "marker");
+
+        // Add a circle.
+        marker
+          .append("circle")
+          .attr("r", 4.0)
+          .attr("cx", padding)
+          .attr("cy", padding);
+
+        function transform(d) {
+          d = new google.maps.LatLng(d[1][0], d[1][1]);
+          d = projection.fromLatLngToDivPixel(d);
+          return d3
+            .select(this)
+            .style("left", d.x - padding + "px")
+            .style("top", d.y - padding + "px");
+        }
+      };
+    };
+
+    // Bind our overlay to the map…
+    overlay.setMap(map);
+  });
+</script>

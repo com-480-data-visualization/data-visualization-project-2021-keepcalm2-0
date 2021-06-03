@@ -8,6 +8,8 @@
 
 The name of this project is : "Being active is Fun & Healthy"
 
+PROJECT HOSTED [HERE](https://msorins.github.io/EPFLDataViz/)
+
 ### Dataset
 
 As all the team is keen on sports and tracking as much data related to it as possible, we decided to direct our project towards those fields of studies. Moreover, one of the team members has been very dedicated to recording his physical activity and health related data during the past year. So based on those unique data points, we created a data-set with entries from around 150 runs and 90 bike rides collected with a "Samsung watch 3", we also have 3 months of sleep,walk  ,calories and heart rate data. 
@@ -77,5 +79,4 @@ Finally, all the html code necessary to compute the website are in the index.htm
 
 # Personal character of the data
 We are aware that the data that we are going to use contains sensitive and personal information (locations, health data).As the owner of this data (Mircea Sorin-Sebastian) I fully agree to using it for this class and openly sharing all of the results. It is my intention to continue gathering more data points and publicly making them available on platforms like Kaggle.
-
 

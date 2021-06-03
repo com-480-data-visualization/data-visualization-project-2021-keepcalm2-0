@@ -1,0 +1,3 @@
+com.samsung.shealth.food_favorite,6156001,1
+amount,food_type,update_time,create_time,name,unit,favoriteid,calorie,deviceuuid,pkg_name,datauuid,food_info_id
+0.0,2,2021-01-03 12:25:23.515,2021-01-03 12:25:23.515,35431d68-07d9-45ca-abd9-1a272e20bac7,,35431d68-07d9-45ca-abd9-1a272e20bac7,0.0,vC702BfhH0,com.sec.android.app.shealth,d87aa71a-3765-4720-9122-af54b4c8f964,fe79ef70-1e1d-46aa-9191-8db0348e0457,

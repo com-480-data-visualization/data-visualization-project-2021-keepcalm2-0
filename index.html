@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8" />
+  <title></title>
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
+  <link rel="stylesheet" href="css/mdb.min.css" />
+
+  <!-- JS Scripts -->
+  <script src="/libs/d3.min.js"></script>
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+  <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+  <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+  <script type="text/javascript" src="js/mdb.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <script src="https://d3js.org/d3-hexbin.v0.2.min.js"></script>
+</head>
+
+<header>
+  <!-- Background image -->
+  <base href="/EPFLDataViz/">
+  <div class="p-5 text-center bg-image" style="
+      background-image: url('https://mdbcdn.b-cdn.net/img/new/slides/041.jpg');
+      height: 400px;
+    ">
+    <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
+      <div class="d-flex justify-content-center align-items-center h-100">
+        <div class="text-white">
+          <h1 class="mb-3">Being active is</h1>
+          <h4 class="mb-3">Fun & Healthy</h4>
+          <a class="btn btn-outline-light btn-lg" href="https://www.youtube.com/watch?v=F86m5mZheak&ab_channel=Sorin-SebastianMircea" role="button">Start exploring your progress !</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Background image -->
+</header>
+
+<body style="min-width: 1000px; background-color: #fafafa">
+
+  <div class="container">
+    <h1 class="display-4 text-center" style="margin-top:30px">Overview</h1>
+    <p class="text-center"> Welcome to everybody the the datastory of Keepcalm2-0, on this webstite you will be able to get a  overview of your collected data and observe the analysis made on Sorin Mircea a member of our team. Let's first start on getting a glance over all the activities.</p>
+    <hr>
+
+    <div class="container" style="margin-top:30px">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Activity Time</h5>
+          <p class="card-text">
+          <div id="calendar_activity_heatmap"></div>
+          </p>
+        </div>
+        <div class="card-footer text-muted">Click on a specific tile to view details for that day</div>
+      </div>
+    </div>
+
+    <div class="container" style="margin-top:30px">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Locations</h5>
+          <p class="card-text geo_dataviz_container">
+            <svg id="geo_dataviz" height="500"></svg>
+          </p>
+        </div>
+        <div class="card-footer text-muted">Short summary of activities placed on the world map. Each activity is represented by a single dot.</div>
+      </div>
+    </div>
+
+
+    <h1 class="display-4 text-center" style="margin-top:60px">Going more in depth</h1>
+    <hr>
+
+    <div class="container" style="margin-top:30px">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Putting each workout on the map</h5>
+          <p class="sleep_duration_histogram_container">
+            <table class="table table-striped" id="overviewDataTable" style="height: 600px; overflow-y:scroll; display: block;">
+              <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Type</th>
+                  <th scope="col">AVG Heart Rate</th>
+                  <th scope="col">Calories</th>
+                  <th scope="col">Distance</th>
+                  <th scope="col">Elapsed Time</th>
+                  <th scope="col">View Activity</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+            <a href="/EPFLDataViz/all_activities_map.html"> <button type="button" class="btn btn-dark">View all the workouts on the map</button> </a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="container" style="margin-top:30px;">
+      <!-- Tabs navs -->
+      <ul class="nav nav-tabs nav-justified mb-3" id="ex1" role="tablist">
+        <li class="nav-item" role="presentation">
+          <a class="nav-link active" id="ex3-tab-1" data-mdb-toggle="tab" href="#ex3-tabs-1" role="tab"
+            aria-controls="ex3-tabs-1" aria-selected="true">By Duration</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="ex3-tab-2" data-mdb-toggle="tab" href="#ex3-tabs-2" role="tab"
+            aria-controls="ex3-tabs-2" aria-selected="false">By Calories</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="ex3-tab-3" data-mdb-toggle="tab" href="#ex3-tabs-3" role="tab"
+            aria-controls="ex3-tabs-3" aria-selected="false">By Distance</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="ex3-tab-3" data-mdb-toggle="tab" href="#ex3-tabs-4" role="tab"
+            aria-controls="ex3-tabs-3" aria-selected="false">By Relative Effort</a>
+        </li>
+      </ul>
+      <!-- Tabs navs -->
+
+      <!-- Tabs content -->
+      <div class="tab-content" id="ex2-content" style="margin-top:-15px">
+        <div class="tab-pane fade show active" id="ex3-tabs-1" role="tabpanel" aria-labelledby="ex3-tab-1">
+                <div class="card text-center">
+                <div class="card-body">
+                  <h5 class="card-title">Activity types by duration</h5>
+                  <p class="card-text">
+                  <div id="treeplot_activities_type_duration"></div>
+                  </p>
+                </div>
+                <div class="card-footer text-muted">Glance over which activities took the most time, have burn the most calories, took you the furthest or pushed you to the max.</div>
+              </div>
+        </div>
+        <div class="tab-pane fade" id="ex3-tabs-2" role="tabpanel" aria-labelledby="ex3-tab-2">
+          <div class="card text-center">
+          <div class="card-body">
+            <h5 class="card-title">Activity types by calories</h5>
+            <p class="card-text">
+            <div id="treeplot_activities_type_calories"></div>
+            </p>
+          </div>
+          <div class="card-footer text-muted">Glance over which activities took the most time, have burn the most calories, took you the furthest or pushed you to the max.</div>
+        </div>
+        </div>
+        <div class="tab-pane fade" id="ex3-tabs-3" role="tabpanel" aria-labelledby="ex3-tab-3">
+          <div class="card text-center">
+          <div class="card-body">
+            <h5 class="card-title">Activity types by distance</h5>
+            <p class="card-text">
+            <div id="treeplot_activities_type_distance"></div>
+            </p>
+          </div>
+          <div class="card-footer text-muted">Glance over which activities took the most time, have burn the most calories, took you the furthest or pushed you to the max.</div>
+        </div>
+        </div>
+        <div class="tab-pane fade" id="ex3-tabs-4" role="tabpanel" aria-labelledby="ex3-tab-3">
+          <div class="card text-center">
+          <div class="card-body">
+            <h5 class="card-title">Activity types by relative effort</h5>
+            <p class="card-text">
+            <div id="treeplot_activities_type_effort"></div>
+            </p>
+          </div>
+          <div class="card-footer text-muted">Glance over which activities took the most time, have burn the most calories, took you the furthest or pushed you to the max.</div>
+        </div>
+        </div>
+      </div>
+      <!-- Tabs content -->
+    </div>
+
+    <!-- average speed -->
+    <div class="container" style="margin-top:30px">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Average speed </h5>
+            <div id="average_speed"></div>
+            <button class="btn btn-light ripple-surface" onclick="update(data_speed2)">Average of Speed [km/h]</button>
+            <button class="btn btn-light ripple-surface" onclick="update(data_speed1)">Reset</button>
+        </div>
+        <div class="card-footer text-muted">Average moving speed depending on activity type.</div>
+      </div>
+      <div class="card-footer text-muted">The above chart depict the average speed for each activity type. The result is pretty obvious, the cycling ride being the fastest with an average of 16km/h and the swimming being the slowest.</div>
+    </div>
+
+    <h1 class="display-4 text-center" style="margin-top:60px">Finding out seasonal patterns</h1>
+    <hr>
+
+    <div class="container" style="margin-top:30px">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Analysis of the motivation through the year</h5>
+          <p></p>
+            	  <div id="stackedbar_chart"></div>
+        </div>
+        <div class="card-footer text-muted">This graph express the motivation of the athletes </div>
+      </div>
+    </div>
+    <div class="card-footer text-muted">In the figure above, we see that a nonconstant evolution. Indeed, it is very interesting to see a drop in the motivation of our subject after September. This may be explained by the weather becoming colder, but the chart is mostly dedicated to being used by the same person which records the data. So, only the subject could recall why he has a drop in his motivation. Then, he may have a better understanding of what makes you want to do more sport.
+Moreover, if we observe activities one by one we can also observe that they are not constant over the year some activities are done at a certain time of the year as the "Hike" which is done only during summer due to the climatic condition. Moreover, we can also observe what could be the effect the COVID-19 on the weight training activity, because the activity disappear after May 2020. </div>
+  </div>
+
+    <div class="container" style="margin-top:30px">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Athletes activity type by season</h5>
+          <p></p>
+            	  <div id="spider_chart"></div>
+        </div>
+        <div class="card-footer text-muted"> This graph explain the repartition of sport by season for an athletes </div>
+
+      </div>
+      <div class="card-footer text-muted">Here, we observe interesting characteristics of the athletes between the two groups. In fact, we easily observe the difference between the sport made more during summer and spring and the one made during winter and fall. The two biggest differences are on the percentage of Moving time spend "Hiking" which is much bigger in summer than during winter, which is perfectly understandable and coherent with the figure showing the motivation. A surprising result is that our athlete spends much more percentage of his time Biking during winter and fall than during other time of the year. That could be explained by the fact that as hiking is not really possible during the winter due to the snow he will spend more time doing other sport like "Bike Ride". Finally, we observe that the athletes spend the same percentage of time running without taking into account the season. </div>
+      </div>
+
+    </div>
+
+
+    <h1 class="display-4 text-center" style="margin-top:60px">Sleep analysis</h1>
+    <p class="text-center">Sleep is a must in achieving performance. Take a look into how sleep affects physyical throughput and viceversa.</p>
+    <hr>
+
+    <div class="container" style="margin-top:30px;">
+      <!-- Tabs navs -->
+      <ul class="nav nav-tabs nav-justified mb-3" id="ex1" role="tablist">
+        <li class="nav-item" role="presentation">
+          <a class="nav-link active" id="ex3-tab-1" data-mdb-toggle="tab" href="#sleep-1" role="tab"
+            aria-controls="ex3-tabs-1" aria-selected="true">Sleep duration</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="ex3-tab-2" data-mdb-toggle="tab" href="#sleep-2" role="tab"
+            aria-controls="ex3-tabs-2" aria-selected="false">Deep sleep</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="ex3-tab-2" data-mdb-toggle="tab" href="#sleep-3" role="tab"
+            aria-controls="ex3-tabs-2" aria-selected="false">Sleep cycles</a>
+        </li>
+      </ul>
+      <!-- Tabs navs -->
+
+      <!-- Tabs content -->
+      <div class="tab-content" id="ex2-content" style="margin-top:-15px">
+        <div class="tab-pane fade show active" id="sleep-1" role="tabpanel" aria-labelledby="ex3-tab-1">
+                <div class="card text-center">
+                <div class="card-body">
+                  <h5 class="card-title">Sleep duration</h5>
+                  <p class="card-text sleep_duration_container">
+                    <div id="sleep_duration_bar_plot"></div>
+                  </p>
+                </div>
+                <div class="card-footer text-muted">Sleep durations patterns</div>
+              </div>
+        </div>
+        <div class="tab-pane fade" id="sleep-2" role="tabpanel" aria-labelledby="ex3-tab-2">
+          <div class="card text-center">
+          <div class="card-body">
+            <h5 class="card-title">Deep Sleep duration</h5>
+            <p class="card-text">
+              <div id="deep_sleep_duration_bar_plot"></div>
+            </p>
+          </div>
+          <div class="card-footer text-muted">Deep Sleep patterns</div>
+        </div>
+        </div>
+        <div class="tab-pane fade" id="sleep-3" role="tabpanel" aria-labelledby="ex3-tab-2">
+          <div class="card text-center">
+          <div class="card-body">
+            <h5 class="card-title">Sleep cycles</h5>
+            <p class="card-text">
+              <div id="sleep_cycles_bar_plot"></div>
+            </p>
+          </div>
+          <div class="card-footer text-muted">Sleep cycles patterns</div>
+        </div>
+        </div>
+      </div>
+      <!-- Tabs content -->
+    </div>
+
+    <div class="container" style="margin-top:30px">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Sleep vs DeepSleep</h5>
+          <p class="card-text sleep_vs_deepsleep_container">
+            <div id="sleep_vs_deepsleep_chart"></div>
+          </p>
+        </div>
+        <div class="card-footer text-muted">Difference in report between sleep and deep sleep</div>
+      </div>
+    </div>
+
+    <div class="container" style="margin-top:30px">
+      <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Sleep Duration Histogram</h5>
+          <p class="sleep_duration_histogram_container">
+            <div id="sleep_duration_histogram_chart"></div>
+          </p>
+        </div>
+        <div class="card-footer text-muted">Histogram with sleep durations. Shows that most night the athlete sleeps around 8.5 hours.</div>
+      </div>
+    </div>
+
+    <!-- Activity vs No Activity -->
+
+    <div class="container" style="margin-top:30px;">
+      <!-- Tabs navs -->
+      <ul class="nav nav-tabs nav-justified mb-3" id="ex3" role="tablist">
+        <li class="nav-item" role="presentation">
+          <a class="nav-link active" id="ex5-tab-1" data-mdb-toggle="tab" href="#sleep-10" role="tab"
+            aria-controls="ex6-tabs-1" aria-selected="true">Hours</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="ex5-tab-2" data-mdb-toggle="tab" href="#sleep-11" role="tab"
+            aria-controls="ex6-tabs-2" aria-selected="false">Deep sleep</a>
+        </li>
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="ex5-tab-3" data-mdb-toggle="tab" href="#sleep-12" role="tab"
+            aria-controls="ex6-tabs-3" aria-selected="false">Sleep cycles</a>
+        </li>
+      </ul>
+      <!-- Tabs navs -->
+
+      <!-- Tabs content -->
+      <div class="tab-content" id="ex2-content" style="margin-top:-15px">
+        <div class="tab-pane fade show active" id="sleep-10" role="tabpanel" aria-labelledby="ex6-tab-1">
+                <div class="card text-center">
+                <div class="card-body">
+                  <h5 class="card-title">Activity vs No Activity (Sleep Hours)</h5>
+                  <p class="card-text sleep_duration_container">
+
+                    <div id="hours_activ_hexbin_plot"></div>
+                    <span>2</span>
+                    <input type="range" name="mySlider7" id=mySlider7 min="2" max="30" value="10" class="slider">
+                    <span>30</span>
+                  </p>
+                </div>
+                <div class="card-footer text-muted">Take a look into how a day with activity vs a day without activity influences the number of sleep hours.</div>
+              </div>
+        </div>
+        <div class="tab-pane fade" id="sleep-11" role="tabpanel" aria-labelledby="ex6-tab-2">
+          <div class="card text-center">
+          <div class="card-body">
+            <h5 class="card-title">Activity vs No Activity (Deep Sleep Hours)</h5>
+            <p class="card-text">
+
+              <div id="deep_sleep_activ_hexbin_plot"></div>
+              <span>2</span>
+              <input type="range" name="mySlider8" id=mySlider8 min="2" max="30" value="10" class="slider">
+              <span>30</span>
+            </p>
+          </div>
+          <div class="card-footer text-muted">Take a look into how a day with activity vs a day without activity influences the number of DEEP sleep hours.</div>
+        </div>
+        </div>
+        <div class="tab-pane fade" id="sleep-12" role="tabpanel" aria-labelledby="ex6-tab-3">
+          <div class="card text-center">
+          <div class="card-body">
+            <h5 class="card-title">Activity vs No Activity (Sleep Cycles)</h5>
+            <p class="card-text">
+              <div id="cycles_activ_hexbin_plot"></div>
+              <span>2</span>
+              <input type="range" name="mySlider9" id=mySlider9 min="2" max="30" value="10" class="slider">
+              <span>30</span>
+            </p>
+          </div>
+          <div class="card-footer text-muted">Take a look into how a day with activity vs a day without activity influences the number of Sleep Cycles.</div>
+        </div>
+        </div>
+      </div>
+      <div class="card-footer text-muted">It's important to notice that the darker the hexbin is, the more nights have been recorded with those parameter quantities. Thus, we observe that when an athlete has done an activity before going to sleep we have fewer small values for Sleep Cycle and Deep Sleep Hours. For the hours versus Activity, where we observe that the result for both discrete variables is very small. This can be explained because the hours we sleep are linked to many other variables like what time are we working. In conclusion, no major correlation between a day with and without activity can be really extracted from those graph, but we propose some hypothesis to explain those result:
+
+1) This could be due to a lack of data and by adding a lot more data we will reach better result.
+
+2) We could question how the data were collected and therefore the precision of the connected watch.
+
+3) The existence of other factors influencing sleep could disturb or result
+
+4) The last hypothesis, is the fact that activity and sleep aren't related.
+</div>
+    </div>
+  <div class="container" style="margin-top:30px;">
+    <!-- Tabs navs -->
+    <ul class="nav nav-tabs nav-justified mb-3" id="ex3" role="tablist">
+      <li class="nav-item" role="presentation">
+        <a class="nav-link active" id="ex4-tab-1" data-mdb-toggle="tab" href="#sleep-4" role="tab"
+          aria-controls="ex4-tabs-1" aria-selected="true">Hours</a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a class="nav-link" id="ex4-tab-2" data-mdb-toggle="tab" href="#sleep-5" role="tab"
+          aria-controls="ex4-tabs-2" aria-selected="false">Deep sleep</a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a class="nav-link" id="ex4-tab-3" data-mdb-toggle="tab" href="#sleep-6" role="tab"
+          aria-controls="ex4-tabs-3" aria-selected="false">Sleep cycles</a>
+      </li>
+    </ul>
+    <!-- Tabs navs -->
+
+    <!-- Tabs content -->
+    <div class="tab-content" id="ex2-content" style="margin-top:-15px">
+      <div class="tab-pane fade show active" id="sleep-4" role="tabpanel" aria-labelledby="ex4-tab-1">
+              <div class="card text-center">
+              <div class="card-body">
+                <h5 class="card-title">Calories ~ Sleep Hours</h5>
+                <p class="card-text sleep_duration_container">
+
+                  <div id="hours_cal_hexbin_plot"></div>
+                  <p> Bin radius</p>
+                  <span>2</span>
+                  <input type="range" name="mySlider" id=mySlider min="2" max="30" value="10" class="slider">
+                  <span>30</span>
+
+                </p>
+              </div>
+              <div class="card-footer text-muted">Depicts the corelation between calories consumed and sleep hours</div>
+            </div>
+      </div>
+      <div class="tab-pane fade" id="sleep-5" role="tabpanel" aria-labelledby="ex4-tab-2">
+        <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Calories ~ Deep Sleep Hours</h5>
+          <p class="card-text">
+
+            <div id="deep_sleep_cal_hexbin_plot"></div>
+            <span>2</span>
+            <input type="range" name="mySlider2" id=mySlider2 min="2" max="30" value="10" class="slider">
+            <span>30</span>
+          </p>
+        </div>
+        <div class="card-footer text-muted">Depicts the corelation between calories consumed and deep sleep hours</div>
+      </div>
+      </div>
+      <div class="tab-pane fade" id="sleep-6" role="tabpanel" aria-labelledby="ex4-tab-3">
+        <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Calories ~ Sleep Cycles</h5>
+          <p class="card-text">
+            <div id="cycles_cal_hexbin_plot"></div>
+            <span>2</span>
+            <input type="range" name="mySlider3" id=mySlider3 min="2" max="30" value="10" class="slider">
+            <span>30</span>
+          </p>
+        </div>
+        <div class="card-footer text-muted">Depicts the corelation between calories consumed and sleep cycles</div>
+      </div>
+      </div>
+    </div>
+    <div class="card-footer text-muted">Here we observe no meaningful correlation in our result this can be explained by the same hypothesis stated before.
+Then we can observe our last analysis which compare the effect of moving time on our sleep.</div>
+    </div>
+
+  <!-- Moving Time -->
+
+  <div class="container" style="margin-top:30px;">
+    <!-- Tabs navs -->
+    <ul class="nav nav-tabs nav-justified mb-3" id="ex3" role="tablist">
+      <li class="nav-item" role="presentation">
+        <a class="nav-link active" id="ex5-tab-1" data-mdb-toggle="tab" href="#sleep-7" role="tab"
+          aria-controls="ex5-tabs-1" aria-selected="true">Hours</a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a class="nav-link" id="ex5-tab-2" data-mdb-toggle="tab" href="#sleep-8" role="tab"
+          aria-controls="ex5-tabs-2" aria-selected="false">Deep sleep</a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a class="nav-link" id="ex5-tab-3" data-mdb-toggle="tab" href="#sleep-9" role="tab"
+          aria-controls="ex5-tabs-3" aria-selected="false">Sleep cycles</a>
+      </li>
+    </ul>
+    <!-- Tabs navs -->
+
+    <!-- Tabs content -->
+    <div class="tab-content" id="ex2-content" style="margin-top:-15px">
+      <div class="tab-pane fade show active" id="sleep-7" role="tabpanel" aria-labelledby="ex5-tab-1">
+              <div class="card text-center">
+              <div class="card-body">
+                <h5 class="card-title">Activity time vs Hours Slept</h5>
+                <p class="card-text sleep_duration_container">
+
+                  <div id="hours_time_hexbin_plot"></div>
+                  <span>2</span>
+                  <input type="range" name="mySlider4" id=mySlider4 min="2" max="30" value="10" class="slider">
+                  <span>30</span>
+
+              </div>
+              <div class="card-footer text-muted">Analyze the ratio between activity time and hours slept per night</div>
+            </div>
+
+      </div>
+      <div class="tab-pane fade" id="sleep-8" role="tabpanel" aria-labelledby="ex5-tab-2">
+        <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Activity time vs Deep Sleep Time</h5>
+          <p class="card-text">
+            <div id="deep_sleep_time_hexbin_plot"></div>
+            <span>2</span>
+            <input type="range" name="mySlider5" id=mySlider5 min="2" max="30" value="10" class="slider">
+            <span>30</span>
+          </p>
+        </div>
+        <div class="card-footer text-muted">Analyze the ratio between activity time and deep sleep hours slept per night.</div>
+      </div>
+      </div>
+      <div class="tab-pane fade" id="sleep-9" role="tabpanel" aria-labelledby="ex5-tab-3">
+        <div class="card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Activity time vs Sleep Cycles</h5>
+          <p class="card-text">
+            <div id="cycles_time_hexbin_plot"></div>
+            <span>2</span>
+            <input type="range" name="mySlider6" id=mySlider6 min="2" max="30" value="10" class="slider">
+            <span>30</span>
+          </p>
+        </div>
+        <div class="card-footer text-muted">Analyze the ratio between activity time and the number of sleep cycles per night.</div>
+      </div>
+      </div>
+      <div class="card-footer text-muted">Finally, we again observe  no meaningful correlation so we conclude that doing more sport( moving time) doesn't necessarily make us sleep better. Nevertheless, we observe the moving interval from 6000 [s] to 12000 [s] we tend to have over 15 cycles and a deep sleep around 0.55 [%]. Under this interval for the sleep cycle, the values are more chaotic.</div>
+    </div>
+    </div>
+
+
+    </div>
+</body>
+
+<!-- Custom Visualizations -->
+<script src="/EPFLDataViz/js/sleepBarPlot.js"></script>
+<script src="/EPFLDataViz/js/linePlot.js"></script>
+<script src="/EPFLDataViz/js/calendarHeatMap.js"></script>
+<script src="/EPFLDataViz/js/geoWorldPlot.js"></script>
+<script src="/EPFLDataViz/js/treeplotActivitiesType.js"></script>
+<script src="/EPFLDataViz/js/sleepStackedBarPlot.js"></script>
+<script src="/EPFLDataViz/js/sleepHistogram.js"></script>
+<script src="/EPFLDataViz/js/overviewTableDataPlot.js"></script>
+<script src="/EPFLDataViz/js/calories_plot.js"></script>
+<script src="/EPFLDataViz/js/movingtime_plot.js"></script>
+<script src="/EPFLDataViz/js/actinoactiv_plot.js"></script>
+<script src="/EPFLDataViz/js/average_speed_max.js"></script>
+<script src="/EPFLDataViz/js/RadarChart.js"></script>
+<script type="text/javascript" src="/EPFLDataViz/js/script_spiderchart.js"></script>
+<script src="/EPFLDataViz/js/stackedbar_chart.js"></script>
+
+<style type="text/css">
+  /* Improve readability */
+  #calendar_activity_heatmap rect{
+    cursor : pointer;
+  }
+  .card{
+    box-shadow: 0px 0px 0px rgb(145, 145, 145);
+    transition: 0.2s;
+    border-radius: 15px;
+  }
+  .card:hover{
+    border-radius: 0px;
+    transform: scale(1.01);
+    box-shadow: 0px 0px 20px rgb(145, 145, 145);
+  }
+
+  /* 13. Basic Styling with CSS */
+
+  /* Style the lines by removing the fill and applying a stroke */
+  .line {
+    fill: none;
+    stroke: #ffab00;
+    stroke-width: 3;
+  }
+
+  .overlay {
+    fill: none;
+    pointer-events: all;
+  }
+
+  /* Style the dots by assigning a fill and stroke */
+  .dot {
+    fill: #ffab00;
+    stroke: #fff;
+  }
+
+  .focus circle {
+    fill: none;
+    stroke: steelblue;
+  }
+
+  div.tooltip {
+    position: absolute;
+    text-align: center;
+    padding: 5px 10px;
+    font: 12px sans-serif;
+    background: lightsteelblue;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+  }
+  div.tooltip h4{
+    display: inline;
+  }
+  div.tooltip img{
+    height: 20px;
+    margin: 10px;
+  }
+  .slidecontainer {
+  width: 50%;
+  }
+  .slider {
+  -webkit-appearance: none;
+  width: 70%;
+  height: 10px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  }
+  .slider:hover {
+  opacity: 1;
+  }
+
+  .slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 5px;
+  height: 25px;
+  background: #000099;
+  cursor: pointer;
+  }
+
+</style>
+
+</html>

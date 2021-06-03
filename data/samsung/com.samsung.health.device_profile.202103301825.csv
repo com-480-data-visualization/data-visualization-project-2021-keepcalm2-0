@@ -1,0 +1,8 @@
+com.samsung.health.device_profile,6156001,6
+manufacturer,providing_step_goal,step_source_group,device_type,backsync_step_goal,capability,device_group,update_time,create_time,name,model,connectivity_type,deviceuuid,pkg_name,fixed_name,datauuid
+Samsung,,,,,,360001,2021-02-28 13:46:13.274,2021-02-28 13:46:13.274,My Device,SM-N986U1,,OD8XXfRrR9,com.sec.android.app.shealth,Sorin's Galaxy Note20 Ultra 5G,e3d806f7-f551-420d-0d07-f47df22d0616,
+Combined,,,,,,0,2021-02-28 13:46:13.366,2021-02-28 13:46:13.366,Combined,Combined,,VfS0qUERdZ,com.sec.android.app.shealth,Sorin's Galaxy Note20 Ultra 5G,7af9722c-cd99-07b7-853a-43ce58e819c5,
+all_target,,,,,,0,2021-02-28 13:46:16.756,2021-02-28 13:46:16.756,all_target,all_target,,Mk66SbFqK1,com.sec.android.app.shealth,Sorin's Galaxy Note20 Ultra 5G,471ca32b-a665-1e9e-7c27-7ac69485dc05,
+OnePlus,,,,,,360001,2020-11-07 08:33:16.606,2020-11-07 08:33:16.606,My Device,ONEPLUS A6003,,vC702BfhH0,com.sec.android.app.shealth,OnePlus 6,cb6f2ff5-5bfb-5b62-0741-34f2049f16cb,
+Samsung Electronics,,,,,,360003,2020-11-07 08:34:30.442,2020-11-07 08:34:30.442,Strava,www.strava.com,,QImw1HpIs0,com.sec.android.app.shealth,OnePlus 6,d9a78fba-9bfb-b09d-3946-2db0ad997f72,
+Samsung Electronics,1,24,10050,1,31a8e48d-55d1-159f-09c1-f166616f241f.capability.json,360003,2021-03-02 08:25:25.801,2020-11-07 08:33:16.718,Galaxy Watch3,,,RHeBeWmk3Z,com.sec.android.app.shealth,OnePlus 6,31a8e48d-55d1-159f-09c1-f166616f241f,

@@ -1,0 +1,3 @@
+com.samsung.shealth.exercise.route,6156001,3
+duration,start_longitude,custom,update_time,create_time,source_data,source_type,name,level,distance,end_latitude,start_latitude,deviceuuid,end_longitude,mean_grade,pkg_name,altitude_gain,datauuid
+15389000,6.143043,,2021-02-02 19:59:34.112,2021-02-02 19:59:34.112,815abbc1-fa54-440f-a24c-1b770fb67a67.source_data.json,0,Geneve - Lausanne,,78779.89,46.51616,46.20955,vC702BfhH0,6.6073103,2.1830416,com.sec.android.app.shealth,0.0,815abbc1-fa54-440f-a24c-1b770fb67a67,

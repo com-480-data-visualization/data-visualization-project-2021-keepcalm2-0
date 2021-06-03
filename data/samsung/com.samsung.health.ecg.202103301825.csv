@@ -1,0 +1,4 @@
+com.samsung.health.ecg,6156001,1
+sample_frequency,start_time,custom,mean_heart_rate,max_heart_rate,update_time,create_time,data_mime,data,min_heart_rate,sample_count,time_offset,deviceuuid,comment,pkg_name,end_time,datauuid
+501,2021-03-08 21:47:31.653,,60.0,,2021-03-08 21:48:08.188,2021-03-08 21:48:08.188,application/pdf,e0bdff57-bd94-485a-bd88-ba803f202f52.data.pdf,,15000,UTC+0300,d4426820-4623-48e5-a9b6-a065583ad81d,,com.samsung.android.shealthmonitor,2021-03-08 21:48:01.653,e0bdff57-bd94-485a-bd88-ba803f202f52,
+501,2021-03-22 15:32:02.925,,84.0,,2021-03-24 19:41:31.509,2021-03-24 19:41:31.509,application/pdf,e57724ba-a02a-4bb4-bc99-d9e0e398e59f.data.pdf,,15000,UTC+0300,d4426820-4623-48e5-a9b6-a065583ad81d,,com.samsung.android.shealthmonitor,2021-03-22 15:32:32.925,e57724ba-a02a-4bb4-bc99-d9e0e398e59f,
