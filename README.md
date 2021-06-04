@@ -6,7 +6,7 @@
 | AJEGHRIR Mustapha | 333806 |
 | Sorin Mircea | 306618 |
 
-The name of this project is : "Being active is Fun & Healthy"
+The project name : "Being active is Fun & Healthy"
 
 PROJECT HOSTED [HERE](https://msorins.github.io/EPFLDataViz/)
 
